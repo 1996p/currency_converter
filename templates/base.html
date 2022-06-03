@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+</head>
+
+<body onload="startTime()">
+
+<div id="time"></div>
+
+<form name="form1" method="get" >
+    <div id="input" >Введите сумму: <input type="text" name="inputbox" value=""  onblur="convert(this.form)"> <br>
+    </div>
+    Выберите валюты:<br>ИЗ
+    <select id="mymenu" size="3" >
+        <option id="fromUSD">USD</option>
+        <option id="fromEUR">EUR</option>
+        <option id="fromGBP">GBP</option>
+        <option id="fromRUB">RUB</option>
+    </select>
+В
+    <select id="mymenu" size="3" >
+        <option id="toUSD">USD</option>
+        <option id="toEUR">EUR</option>
+        <option id="toGBP">GBP</option>
+        <option id="toRUB">RUB</option>
+    </select>
+
+
+</form>
+
+<div id="div1">Результат:
+    <div id="div2">  </div>
+</div>
+
+
+
+</body>
+
+</html>
