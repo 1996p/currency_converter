@@ -48,8 +48,12 @@
 
 {% if result %}
     <div id="div1">Результат:
-        <div id="div2">{{ result }}</div>
+        <div id="div2" style="color: lightgreen">{{ result }}</div>
+        <div> По курсу <span style="color: green">{{ price }}</span></div>
+        <h6>Последнее обновление курса <span style="color: green"> {{ last_update_course }} </span></h6>
     </div>
+
+
 {% endif %}
 {##}
 {#<button type="submit">Рассчитать</button>#}

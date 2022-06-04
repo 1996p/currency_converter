@@ -6,6 +6,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'currency_converter.settings')
 import django
 django.setup()
 from mainapp.models import CurrencyPair
+from .exceptions import *
 
 
 API_KEY = 'f85b775347f74afcbde40b5d06e70e5e'
@@ -37,29 +38,27 @@ def get_pair_json(from_currency: Currency, to_currency: Currency) -> None:
                                                        api_key=API_KEY),
                            headers=HEADERS)
     if request.json()['status'] != 200:
-        return
+        raise CantGetCurrencyData()
+
     price = parse_pair(data=request.json(), from_currency=from_currency, to_currency=to_currency)
 
-    save_new_pair(from_currency=from_currency, to_currency=to_currency, price=price)
+    update_pair(from_currency=from_currency, to_currency=to_currency, price=price)
 
 
 def parse_pair(data: dict, from_currency: Currency, to_currency: Currency) -> float:
     return float(data['data'][f'{from_currency.name}{to_currency.name}'])
 
 
-def save_new_pair(from_currency: Currency, to_currency: Currency, price: float) -> None:
-    CurrencyPair.objects.create(first_currency_name=from_currency.name,
-                                second_currency_name=to_currency.name,
-                                price=price)
+def update_pair(from_currency: Currency, to_currency: Currency, price: float) -> None:
+
+    pair = CurrencyPair.objects.get(first_currency_name=from_currency.name,
+                                second_currency_name=to_currency.name)
+    pair.price = price
+    pair.save()
 
 
 def main_func():
-    # get_pair_json(Currency.USD.name, Currency.RUB.name)
-    for first_cur in Currency:
-        for sec_cur in Currency:
-            if first_cur.name != sec_cur.name:
-                print(f"{first_cur.name} - {sec_cur.name}")
-                get_pair_json(first_cur, sec_cur)
+    pass
 
 
 if __name__ == '__main__':

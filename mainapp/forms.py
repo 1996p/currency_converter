@@ -16,7 +16,7 @@ CURRENCY = (
 )
 
 
-class CurrencyPair(forms.Form):
+class CurrencyPairForm(forms.Form):
     currency_count = forms.DecimalField(min_value=0.1)
     from_currency = forms.ChoiceField(choices=CURRENCY)
     to_currency = forms.ChoiceField(choices=CURRENCY)
