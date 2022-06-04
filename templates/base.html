@@ -13,31 +13,46 @@
 
 <div id="time"></div>
 
-<form name="form1" method="get" >
-    <div id="input" >Введите сумму: <input type="text" name="inputbox" value=""  onblur="convert(this.form)"> <br>
-    </div>
-    Выберите валюты:<br>ИЗ
-    <select id="mymenu" size="3" >
-        <option id="fromUSD">USD</option>
-        <option id="fromEUR">EUR</option>
-        <option id="fromGBP">GBP</option>
-        <option id="fromRUB">RUB</option>
-    </select>
-В
-    <select id="mymenu" size="3" >
-        <option id="toUSD">USD</option>
-        <option id="toEUR">EUR</option>
-        <option id="toGBP">GBP</option>
-        <option id="toRUB">RUB</option>
-    </select>
+{#<form name="form1" method="get" >#}
+{#    <div id="input" >Введите сумму: <input type="text" name="inputbox" value=""  onblur="convert(this.form)"> <br>#}
+{#    </div>#}
+{#    Выберите валюты:<br>ИЗ#}
+{#    <select id="mymenu" size="3" >#}
+{#        <option id="fromUSD">USD</option>#}
+{#        <option id="fromEUR">EUR</option>#}
+{#        <option id="fromGBP">GBP</option>#}
+{#        <option id="fromRUB">RUB</option>#}
+{#    </select>#}
+{#В#}
+{#    <select id="mymenu" size="3" >#}
+{#        <option id="toUSD">USD</option>#}
+{#        <option id="toEUR">EUR</option>#}
+{#        <option id="toGBP">GBP</option>#}
+{#        <option id="toRUB">RUB</option>#}
+{#    </select>#}
+{##}
 
-
+<form action="{% url 'index' %}" method="post">
+    {% csrf_token %}
+    <label>Количество</label> {{ form.currency_count }} <br>
+    <label>Из</label> {{ form.from_currency }}
+    <label>В</label> {{ form.to_currency }}
+    <br>
+    <button type="submit">Рассчитать</button>
 </form>
 
-<div id="div1">Результат:
-    <div id="div2">  </div>
-</div>
+{% if same_currencies_error %}
+    <div id="div1" style="color: red">Пара состоит из одних и тех же валют!
+    </div>
+{% endif %}
 
+{% if result %}
+    <div id="div1">Результат:
+        <div id="div2">{{ result }}</div>
+    </div>
+{% endif %}
+{##}
+{#<button type="submit">Рассчитать</button>#}
 
 
 </body>
